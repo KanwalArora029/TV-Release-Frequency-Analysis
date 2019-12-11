@@ -23,11 +23,11 @@ def show_paginate(start_date):
     for page in range(page_count):
         show_list = get_shows(start_date, (page + 1))
         for show in show_list:
-            print(show)
             episode_list = get_first_season(show['show_id'])
             first_date = episode_list[0]['air_date']
             last_date = episode_list[-1]['air_date']
-            binge_release = (first_date == last_date)
+            show['binge_release'] = (first_date == last_date)
+            print(show)
             print(episode_list)
         return
 

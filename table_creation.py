@@ -21,30 +21,28 @@ cursor = cnx.cursor()
 TABLES = {}
 TABLES['tv_shows'] = ("""
      CREATE TABLE tv_shows (
-      show_id int NOT NULL AUTO_INCREMENT,
-      moviedb_show_id varchar(22),
+      moviedb_show_id varchar(22) NOT NULL,
       imdb_show_id varchar(22),
       name varchar(50) NOT NULL,
       popularity decimal(20,2),
       vote_count int(22),
       vote_average decimal(6,2),
       binge_release BOOLEAN,
-      PRIMARY KEY (show_id)
+      PRIMARY KEY (moviedb_show_id)
     ) ENGINE=InnoDB""")
 
 TABLES['tv_episodes'] = ("""
      CREATE TABLE tv_episodes (
-     ep_id int NOT NULL AUTO_INCREMENT,
-     show_id int NOT NULL,
-     moviedb_ep_id varchar(22),
+     moviedb_ep_id varchar(22) NOT NULL,
+     moviedb_show_id varchar(22) NOT NULL,
      imdb_ep_id varchar(22),
      episode_number int(22),
      season_number int(22),
      vote_count int(22),
      vote_average decimal(6,2),
      air_date varchar(20),
-     PRIMARY KEY (ep_id),
-     FOREIGN KEY (show_id) REFERENCES tv_shows(show_id)
+     PRIMARY KEY (moviedb_ep_id),
+     FOREIGN KEY (moviedb_show_id) REFERENCES tv_shows(moviedb_show_id)
     ) ENGINE=InnoDB""")
 
 
