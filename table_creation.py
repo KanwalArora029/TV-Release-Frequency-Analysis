@@ -1,11 +1,11 @@
-import json
-import requests
 import mysql.connector
 import config
 from mysql.connector import errorcode
 
+#set database name
 DB_NAME = 'tv_shows'
 
+#create connection
 cnx = mysql.connector .connect(
     host = config.host,
     user = config.user,
@@ -14,20 +14,10 @@ cnx = mysql.connector .connect(
     use_pure=True
 )
 
+#start cursor
 cursor = cnx.cursor()
 
-
-def create_database(cursor, database):
-    try:
-        cursor.execute(
-            "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(database))
-    except mysql.connector.Error as err:
-        print("Failed creating database: {}".format(err))
-        exit(1)
-
-#create_database(cursor, DB_NAME)
-
-
+#set list of tables to be created
 TABLES = {}
 TABLES['tv_shows'] = ("""
      CREATE TABLE tv_shows (
@@ -58,6 +48,7 @@ TABLES['tv_episodes'] = ("""
     ) ENGINE=InnoDB""")
 
 
+#table creation function accepts a list and exectutes each element
 def table_creation(table_list):
     for table_name in table_list:
         table_description = table_list[table_name]
@@ -72,7 +63,9 @@ def table_creation(table_list):
         else:
             print("OK")
 
+#call table_creation and pass it our list of tables
 table_creation(TABLES)
 
+#close the connection
 cursor.close()
 cnx.close()
