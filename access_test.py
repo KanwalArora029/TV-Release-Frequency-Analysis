@@ -1,6 +1,6 @@
 import requests
 import time
-import movie_db_etl
+#import movie_db_etl
 
 api_key = "88b24a41df02b91de3151b904a335e9c"
 
