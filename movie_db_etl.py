@@ -1,9 +1,10 @@
 import mysql.connector
 import config
 
+#set database name
 DB_NAME = 'tv_shows'
 
-
+#create connection
 cnx = mysql.connector .connect(
     host = config.host,
     user = config.user,
@@ -12,18 +13,23 @@ cnx = mysql.connector .connect(
     use_pure=True
 )
 
-
-def show_etl(show, binge_release):
-    cursor = cnx.cursor()
-
-    add_show = 
+#start cursor
+cursor = cnx.cursor()
 
 
+def show_etl(parsed_results):
 
-def db_insert(cnx, cursor, parsed_results):
-    add_business = ("""INSERT INTO yelp_reviews
-               (review_id, business_id, reviews, time_created)
-               VALUES (%s, %s, %s, %s)""")
-    cursor.executemany(add_business, parsed_results)
+    add_show = ("""INSERT INTO tv_shows
+               (moviedb_show_id, name, popularity, vote_count, vote_average, binge_release)
+               VALUES (%s, %s, %s, %s, %s, %s)""")
+    cursor.execute(add_show, parsed_results)
     cnx.commit()
-    print('Good job!')
+
+
+def ep_etl(parsed_results):
+
+    add_ep = ("""INSERT INTO tv_episodes
+               (moviedb_ep_id, moviedb_show_id, episode_number, vote_count, vote_average, air_date)
+               VALUES (%s, %s, %s, %s, %s, %s)""")
+    cursor.execute(add_ep, parsed_results)
+    cnx.commit()
