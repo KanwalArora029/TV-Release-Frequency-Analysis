@@ -1,7 +1,6 @@
 import requests
 import time
-import movie_db_etl
-#import movie_db_etl
+import mysql_etl_functions
 
 api_key = "88b24a41df02b91de3151b904a335e9c"
 
@@ -79,15 +78,6 @@ def get_shows(start_date, page, counter = 0):
         #wait 2 seconds and then call the same function again
         return get_shows(start_date, page, counter)
 
-#return_list = get_shows(start_date, 1)
-#print(return_list)
-#show_paginate(start_date, end_date)
-
-#print(return_list)
-
-add_ep = ("""INSERT INTO tv_episodes
-           (moviedb_ep_id, moviedb_show_id, episode_number, vote_count, vote_average, air_date)
-           VALUES (%s, %s, %s, %s, %s)""")
 
 def get_first_season(show_id, counter = 0):
     url = 'https://api.themoviedb.org/3/tv/' + str(show_id) + '/season/1?api_key=88b24a41df02b91de3151b904a335e9c&language=en-US'
@@ -113,4 +103,4 @@ def get_first_season(show_id, counter = 0):
 
 #print(get_first_season(82856))
 
-show_paginate(start_date)
+#show_paginate(start_date)
