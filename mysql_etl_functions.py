@@ -40,8 +40,14 @@ def get_moviedb_id():
     cursor.execute(get_ids)
     return cursor.fetchall()
 
-def update_imdb_id(id_tuple_list):
+def update_imdb_id(id_tuple):
     #takes a list of 2 element tuples, first element is imdb_id and the second is the movie_db_id
     update_imdb = ("""UPDATE tv_shows SET imdb_show_id = %s WHERE moviedb_show_id = %s """)
-    cursor.executemany(update_imdb, id_tuple_list)
+    cursor.execute(update_imdb, id_tuple)
     cnx.commit()
+
+def get_imdb_id():
+    #gets list of tv show imdb ids if the show has more than 5 votes
+    get_ids = ("""SELECT imdb_show_id FROM tv_shows WHERE vote_count > 5""")
+    cursor.execute(get_ids)
+    return cursor.fetchall()
