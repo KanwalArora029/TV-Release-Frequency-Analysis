@@ -34,6 +34,13 @@ def ep_etl(parsed_results):
     cursor.execute(add_ep, parsed_results)
     cnx.commit()
 
+def imdb_episode_rating_etl(parsed_results):
+    add_ep = ("""INSERT INTO imdb_episode_rating
+               (imdb_show_id, moviedb_show_id, episode_number, season_number, imdb_rating, imdb_vote_count)
+               VALUES (%s, %s, %s, %s, %s, %s)""")
+    cursor.execute(add_ep, parsed_results)
+    cnx.commit()
+
 def get_moviedb_id():
     #simply returns all movie_db_id from the database who more than 5 votes
     get_ids = ("""SELECT moviedb_show_id FROM tv_shows WHERE vote_count > 5""")
@@ -48,6 +55,6 @@ def update_imdb_id(id_tuple):
 
 def get_imdb_id():
     #gets list of tv show imdb ids if the show has more than 5 votes
-    get_ids = ("""SELECT imdb_show_id FROM tv_shows WHERE vote_count > 5""")
+    get_ids = ("""SELECT imdb_show_id, moviedb_show_id FROM tv_shows WHERE imdb_show_id IS NOT NULL AND vote_count > 5""")
     cursor.execute(get_ids)
     return cursor.fetchall()

@@ -45,6 +45,18 @@ TABLES['tv_episodes'] = ("""
      FOREIGN KEY (moviedb_show_id) REFERENCES tv_shows(moviedb_show_id)
     ) ENGINE=InnoDB""")
 
+TABLES['imdb_episode_rating'] = ("""
+     CREATE TABLE imdb_episode_rating (
+     episode_id INT NOT NULL AUTO_INCREMENT ,
+     imdb_show_id varchar(22),
+     moviedb_show_id varchar(22),
+     episode_number int(22),
+     season_number int(22),
+     imdb_rating decimal(6,2),
+     imdb_vote_count int(22),
+     PRIMARY KEY (episode_id)
+   ) ENGINE=InnoDB""")
+
 
 #table creation function accepts a list and exectutes each element
 def table_creation(table_list):
