@@ -58,3 +58,21 @@ def get_imdb_id():
     get_ids = ("""SELECT imdb_show_id, moviedb_show_id FROM tv_shows WHERE imdb_show_id IS NOT NULL AND vote_count > 5""")
     cursor.execute(get_ids)
     return cursor.fetchall()
+
+def get_data_frame():
+
+    get_data = '''SELECT rate.episode_id
+                    ,tv.binge_release
+                	,tv.name
+                    ,rate.episode_number
+                	,rate.imdb_vote_count
+                    ,rate.imdb_rating
+                    ,ep.vote_count AS moviedb_vote_count
+                    ,ep.vote_average AS moviedb_vote_rating
+                FROM tv_shows.imdb_episode_rating rate
+                LEFT JOIN tv_shows.tv_shows tv ON rate.moviedb_show_id = tv.moviedb_show_id
+                LEFT JOIN tv_shows.tv_episodes ep ON(rate.moviedb_show_id = ep.moviedb_show_id AND rate.episode_number = ep.episode_number)
+                WHERE rate.imdb_vote_count > 0'''
+
+    cursor.execute(get_data)
+    return cursor.fetchall()
