@@ -47,6 +47,12 @@ def get_moviedb_id():
     cursor.execute(get_ids)
     return cursor.fetchall()
 
+def get_show_name():
+    #simply returns all movie_db_id from the database who more than 5 votes
+    get_ids = ("""SELECT name, moviedb_show_id FROM tv_shows WHERE vote_count > 5""")
+    cursor.execute(get_ids)
+    return cursor.fetchall()
+
 def update_imdb_id(id_tuple):
     #takes a list of 2 element tuples, first element is imdb_id and the second is the movie_db_id
     update_imdb = ("""UPDATE tv_shows SET imdb_show_id = %s WHERE moviedb_show_id = %s """)
@@ -73,6 +79,20 @@ def get_data_frame():
                 LEFT JOIN tv_shows.tv_shows tv ON rate.moviedb_show_id = tv.moviedb_show_id
                 LEFT JOIN tv_shows.tv_episodes ep ON(rate.moviedb_show_id = ep.moviedb_show_id AND rate.episode_number = ep.episode_number)
                 WHERE rate.imdb_vote_count > 0'''
+
+    cursor.execute(get_data)
+    return cursor.fetchall()
+
+def get_episode_count():
+    get_data = '''
+                SELECT
+                    ep.episode_number
+                    ,SUM(CASE WHEN tv.binge_release THEN 1 ELSE 0 END) AS total_batch
+                    ,SUM(CASE WHEN tv.binge_release THEN 0 ELSE 1 END) AS total_serial
+                FROM tv_shows.tv_shows tv
+                LEFT JOIN tv_shows.tv_episodes ep ON(tv.moviedb_show_id = ep.moviedb_show_id)
+                GROUP BY ep.episode_number
+                '''
 
     cursor.execute(get_data)
     return cursor.fetchall()
