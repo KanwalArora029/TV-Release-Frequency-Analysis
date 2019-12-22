@@ -32,4 +32,4 @@ def imdb_paginate():
     id_list = mysql_etl_functions.get_imdb_id()
     imdb_season_1_scraper(id_list)
 
-imdb_paginate()
+#imdb_paginate()
