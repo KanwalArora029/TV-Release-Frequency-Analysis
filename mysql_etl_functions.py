@@ -35,6 +35,7 @@ def ep_etl(parsed_results):
     cnx.commit()
 
 def imdb_episode_rating_etl(parsed_results):
+    #inserts a single imdb rating for a TV show
     add_ep = ("""INSERT INTO imdb_episode_rating
                (imdb_show_id, moviedb_show_id, episode_number, season_number, imdb_rating, imdb_vote_count)
                VALUES (%s, %s, %s, %s, %s, %s)""")
@@ -66,7 +67,8 @@ def get_imdb_id():
     return cursor.fetchall()
 
 def get_data_frame():
-
+    #joins and retrieves information to be used in dataframe creation and then for charts
+    #meant to be comprehensive of the whole project
     get_data = '''SELECT rate.episode_id
                     ,tv.binge_release
                 	,tv.name
@@ -96,3 +98,6 @@ def get_episode_count():
 
     cursor.execute(get_data)
     return cursor.fetchall()
+
+cursor.close()
+cnx.close()
