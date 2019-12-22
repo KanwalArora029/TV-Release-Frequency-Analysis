@@ -38,8 +38,3 @@ def create_TV_data_frames():
     #then split that subset up by 'binge_release' type
 
     return [df, df_first_10, first_10_binge, first_10_serial]
-
-'''episode_count_data = mysql_etl_functions.get_episode_count()
-df_ep_count = pd.DataFrame(episode_count_data , columns = ['episode_number','total_batch', 'total_serial'])
-df_ep_count['total_batch'] = df_ep_count['total_batch'].astype('int')
-df_ep_count['total_serial'] = df_ep_count['total_serial'].astype('int')'''

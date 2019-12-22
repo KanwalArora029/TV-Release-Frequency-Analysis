@@ -74,7 +74,7 @@ def table_creation(table_list):
             print("OK")
 
 #call table_creation and pass it our list of tables
-table_creation(TABLES)
+#table_creation(TABLES)
 
 #close the connection
 cursor.close()
